@@ -1,0 +1,56 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
+    <script>
+	$('#flash-messages').flashNotification('init');
+	</script>
+{% endblock %}
+
+{% block title 'Demo Bundle' %}
+
+{% block body %}
+	
+	   {% block content_header %}
+        <ul id="menu">
+            {% block content_header_more %}
+                <li><a href="{{ path('_demo') }}">Demo Home</a></li>
+            {% endblock %}
+        </ul>
+
+        <div style="clear: both"></div>
+    {% endblock %}
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="flash-message">
+            <em>Message</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+    
+      {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="flash-message">
+            <em>Message</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+ 
+
+    <div class="block" align="center">
+        {% block content %}
+        <!--<img src="{{ asset('fridge.png') }}"/>-->
+         <form action="" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit" value="Submit"/>
+  	    </form>
+        {% endblock %}
+    </div>
+
+    {% if code is defined %}
+        <h2>Code behind this page</h2>
+        <div class="block">
+            <div class="symfony-content">{{ code|raw }}</div>
+        </div>
+    {% endif %}
+{% endblock %}
